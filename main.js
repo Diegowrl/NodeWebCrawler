@@ -1,6 +1,7 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
+const list = require('./database')
 
 var name = [];
 var cont;
@@ -34,56 +35,17 @@ for (let index = 0; index < 2; index++) {
           name.push('{ "Title": "' + data + '","Score":'+ star +'}');
         });
         
-        //obj = JSON.parse(name);
         fs.appendFileSync('myanimelist.json', name);
-        
-        //console.log(obj)
       });
   }
 }
 
+list.findAll()
+.then((req,res)=>{
+  console.log(res)
+})
+.catch((err)=>{
+  console.log(err)
+});
 
-
-
-
-
-
-
-
-
-
-//console.log(name);
-// if(permiter){
-//   request('https://myanimelist.net/topanime.php',(err,res,body)=>{
-//       if (err) {console.log('Erro' + err)};
-
-//       const $ = cheerio.load(body);
-      
-//       $('.ranking-list').each(function(){ 
-//         name +=  ',' + $(this).find('.di-ib a').html();
-//         permiter = false;
-//       });
-//       //name = name.substr(1)
-//       //fs.appendFileSync('myanimelist.txt', name + '\n');
-      
-//   });
-
-// }
-
-// if(cont < 100) {
-//   request(`https://myanimelist.net/topanime.php?limit=${cont}`,(err,res,body)=>{
-//       if (err) {console.log('Erro' + err)};
-
-//       const $ = cheerio.load(body);
-      
-//       $('.ranking-list').each(function(){ 
-//         name +=  ',' + $(this).find('.di-ib a').html();
-//         permiter = false;
-//       });
-
-//       name = name.substr(1)
-//       fs.appendFileSync('myanimelist.txt', name + '\n');
-//     });
-// }
-
-// console.log(name);
+//var file = JSON.parse(fs.readFileSync('myanimelist.json', 'utf8'));
